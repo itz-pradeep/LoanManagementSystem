@@ -1,0 +1,46 @@
+<div class="signin">
+  <section class="form-signin">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+      <div class="form-floating">
+        <input
+          type="email"
+          class="form-control"
+          id="username"
+          placeholder="name@example.com"
+          formControlName="username"
+        />
+        <label for="username">Username</label>
+        <span
+          class="text-danger"
+          *ngIf="username?.invalid && (username?.touched || username?.dirty)"
+          >Invalid Username.</span
+        >
+      </div>
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <label for="password">Password</label>
+        <span
+          class="text-danger"
+          *ngIf="password?.invalid && (password?.touched || password?.dirty)"
+          >Invalid password.</span
+        >
+      </div>
+
+      <div class="checkbox mb-3 text-center">
+        <label>
+          <input type="checkbox" value="remember-me" /> Remember me
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">
+        Sign in
+      </button>
+    </form>
+  </section>
+</div>

@@ -1,0 +1,13 @@
+.home{
+    height: 100vh;
+}
+
+.home__action{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.home__applications{
+    margin-top: 30px;
+}

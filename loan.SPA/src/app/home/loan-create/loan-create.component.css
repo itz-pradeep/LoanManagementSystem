@@ -1,0 +1,51 @@
+html,
+body {
+  height: 100%;
+}
+
+.loan__create{
+    display: flex;
+    margin-top: 100px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.loan__create__form{
+  width: 100%;
+  max-width: 600px;
+  padding: 15px;
+  margin: auto;
+}
+h1{
+    font-size: xx-large;
+}
+.loan__create__form .form-floating:focus-within {
+  z-index: 2;
+}
+
+.loan__create__form input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.loan__create__form input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }

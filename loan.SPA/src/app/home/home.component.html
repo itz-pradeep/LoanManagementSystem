@@ -1,0 +1,46 @@
+<div class="home">
+  <!-- Action tab -->
+  <form>
+    <div class="home__action">
+      <div class="px-3">
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          placeholder="First Name"
+        />
+      </div>
+      <div class="px-3">
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          placeholder="Last Name"
+        />
+      </div>
+      <div class="px-3">
+        <input
+          type="text"
+          class="form-control"
+          id="loanNumber"
+          placeholder="Loan Number"
+        />
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-success me-2">Search</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [routerLink]="['loan-create']"
+        >
+          Create
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Loan applications -->
+  <div class="home__applications">
+    <app-loan-list></app-loan-list>
+  </div>
+</div>

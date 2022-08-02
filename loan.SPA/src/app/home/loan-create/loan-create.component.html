@@ -1,0 +1,87 @@
+<div class="loan__create">
+  <section class="loan__create__form">
+    <form>
+      <h1 class="h3 mb-3 fw-normal text-center">Create Application</h1>
+      <div class="row">
+        <div class="col-md-6 mt-4">
+          <label for="firstName" class="form-label">First name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            placeholder=""
+            value=""
+            required=""
+          />
+          <div class="invalid-feedback">Valid first name is required.</div>
+        </div>
+        <div class="col-md-6 mt-4">
+          <label for="lastName" class="form-label">Last name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            placeholder=""
+            value=""
+            required=""
+          />
+          <div class="invalid-feedback">Valid last name is required.</div>
+        </div>
+        <div class="col-md-6 mt-4">
+          <label for="loanAmount" class="form-label">Loan amount</label>
+          <input
+            type="number"
+            class="form-control"
+            id="loanAmount"
+            placeholder=""
+            value=""
+            required=""
+          />
+          <div class="invalid-feedback">Valid loan amount is required.</div>
+        </div>
+        <div class="col-md-6 mt-4">
+          <label for="loan tenure" class="form-label">Loan tenure</label>
+          <input
+            type="number"
+            class="form-control"
+            id="loanTenure"
+            placeholder=""
+            value=""
+            required=""
+          />
+          <div class="invalid-feedback">Valid loan tenure is required.</div>
+        </div>
+        <div class="col-md-6 mt-4">
+          <label for="propertyAddress" class="form-label"
+            >Property address</label
+          >
+          <textarea
+            class="form-control"
+            id="propertyAddress"
+            rows="3"
+            placeholder=""
+          ></textarea>
+        </div>
+        <div class="col-md-6 mt-4">
+          <label for="loanTypeId" class="form-label">Loan Type</label>
+          <select class="form-select">
+            <option selected>Select loan type</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+      </div>
+      <div
+        class="button-group d-flex justify-content-center align-items-center mt-5"
+      >
+        <button class="w-50 mt-3 me-2 btn btn-primary" type="submit">
+          Sign in
+        </button>
+        <button class="w-50 mt-3 me-2 btn btn-primary" type="submit">
+          Reset
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
