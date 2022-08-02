@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 1,
+    "Type": "Conventional mortgages"
+  },
+  {
+    "Id": 2,
+    "Type": "Non-Conventional Mortgages"
+  },
+  {
+    "Id": 3,
+    "Type": "Conforming Mortgages"
+  },
+  {
+    "Id": 4,
+    "Type": "Non-Conforming Mortgages"
+  }
+]

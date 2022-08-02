@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 1,
+    "Status": "Pre-Approval"
+  },
+  {
+    "Id": 2,
+    "Status": "Mortgage Applied"
+  },
+  {
+    "Id": 3,
+    "Status": "Loan Processing"
+  },
+  {
+    "Id": 4,
+    "Status": "Underwriting Process"
+  },
+  {
+    "Id": 5,
+    "Status": "Closing"
+  }
+]
