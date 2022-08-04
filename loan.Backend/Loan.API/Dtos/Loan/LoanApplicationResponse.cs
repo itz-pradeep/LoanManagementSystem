@@ -9,6 +9,7 @@
         public string PropertyAddress { get; set; }
         public Decimal LoanAmount { get; set; }
         public int LoanTenure { get; set; }
+        public string LoanTypeId { get; set; }
         public string LoanType { get; set; }
         public string LoanStatus { get; set; }
         public bool IsActive { get; set; }

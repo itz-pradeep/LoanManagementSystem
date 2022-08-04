@@ -7,7 +7,8 @@ import { LoanCreateComponent } from './loan-create/loan-create.component';
 
 const appRoutes: Routes = [
   { path:'',component:HomeComponent},
-  { path:'loan-create',component:LoanCreateComponent}
+  { path:'loan-create',component:LoanCreateComponent},
+  { path:'loan-create/:id',component:LoanCreateComponent},
 ]
 
 

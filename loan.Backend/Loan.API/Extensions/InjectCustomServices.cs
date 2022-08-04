@@ -1,8 +1,11 @@
-﻿using Loan.API.Helpers;
+﻿using Loan.API.Error;
+using Loan.API.Helpers;
 using Loan.Core.Interfaces;
 using Loan.Infrastructure.Data;
 using Loan.Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Loan.API.Extensions
 {
@@ -11,7 +14,7 @@ namespace Loan.API.Extensions
         public static void InjectDbContext(this WebApplicationBuilder builder)
         {
             //Configure Database
-            builder.Services.AddDbContext<LoanContext>(x=>x.UseSqlite(
+            builder.Services.AddDbContext<LoanContext>(x => x.UseSqlite(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddDbContext<AppIdentityDbContext>(x => x.UseSqlite(
@@ -28,8 +31,25 @@ namespace Loan.API.Extensions
         {
             builder.Services.AddControllers();
             builder.Services.AddAutoMapper(typeof(MappingProfiles));
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = (actionContext) =>
+                {
+                    var errors = actionContext.ModelState.Where(x => x.Value.Errors.Count() > 0)
+                    .SelectMany(x => x.Value.Errors)
+                    .Select(x => x.ErrorMessage).ToArray();
+
+                    var errorResponse = new ApiValidationError()
+                    {
+                        Errors = errors
+                    };
+
+                    return new BadRequestObjectResult(errorResponse);
+                };
+            });
+
             builder.Services.AddEndpointsApiExplorer();
+
         }
 
 

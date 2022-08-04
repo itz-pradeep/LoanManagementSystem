@@ -1,7 +1,7 @@
 <div class="loan__create">
   <section class="loan__create__form">
-    <form>
-      <h1 class="h3 mb-3 fw-normal text-center">Create Application</h1>
+    <form [formGroup]="createForm" (ngSubmit)="OnSubmit()">
+      <h1 class="h3 mb-3 fw-normal text-center">{{ pageTitle }}</h1>
       <div class="row">
         <div class="col-md-6 mt-4">
           <label for="firstName" class="form-label">First name</label>
@@ -9,11 +9,16 @@
             type="text"
             class="form-control"
             id="firstName"
-            placeholder=""
-            value=""
-            required=""
+            formControlName="firstName"
           />
-          <div class="invalid-feedback">Valid first name is required.</div>
+          <span
+            class="text-danger"
+            *ngIf="
+              firstName?.invalid && (firstName?.touched || firstName?.dirty)
+            "
+          >
+            Valid first name is required.
+          </span>
         </div>
         <div class="col-md-6 mt-4">
           <label for="lastName" class="form-label">Last name</label>
@@ -21,11 +26,14 @@
             type="text"
             class="form-control"
             id="lastName"
-            placeholder=""
-            value=""
-            required=""
+            formControlName="lastName"
           />
-          <div class="invalid-feedback">Valid last name is required.</div>
+          <span
+            class="text-danger"
+            *ngIf="lastName?.invalid && (lastName?.touched || lastName?.dirty)"
+          >
+            Valid last name is required.
+          </span>
         </div>
         <div class="col-md-6 mt-4">
           <label for="loanAmount" class="form-label">Loan amount</label>
@@ -33,11 +41,21 @@
             type="number"
             class="form-control"
             id="loanAmount"
-            placeholder=""
-            value=""
-            required=""
+            formControlName="loanAmount"
           />
-          <div class="invalid-feedback">Valid loan amount is required.</div>
+          <span
+            class="text-danger"
+            *ngIf="
+              loanAmount?.invalid && (loanAmount?.touched || loanAmount?.dirty)
+            "
+            >Valid loan amount is required.</span
+          >
+          <span class="text-danger" *ngIf="loanAmount.hasError('min')">
+            Minimum $10000 allowed.</span
+          >
+          <span class="text-danger" *ngIf="loanAmount.hasError('max')">
+            Max $1000000 allowed.</span
+          >
         </div>
         <div class="col-md-6 mt-4">
           <label for="loan tenure" class="form-label">Loan tenure</label>
@@ -45,11 +63,21 @@
             type="number"
             class="form-control"
             id="loanTenure"
-            placeholder=""
-            value=""
-            required=""
+            formControlName="loanTenure"
           />
-          <div class="invalid-feedback">Valid loan tenure is required.</div>
+          <span
+            class="text-danger"
+            *ngIf="
+              loanTenure?.invalid && (loanTenure?.touched || loanTenure?.dirty)
+            "
+            >Valid loan tenure is required.</span
+          >
+          <span class="text-danger" *ngIf="loanTenure.hasError('min')">
+            Minimum 3 yrs allowed.</span
+          >
+          <span class="text-danger" *ngIf="loanTenure.hasError('max')">
+            Max 40 yrs allowed.</span
+          >
         </div>
         <div class="col-md-6 mt-4">
           <label for="propertyAddress" class="form-label"
@@ -59,26 +87,46 @@
             class="form-control"
             id="propertyAddress"
             rows="3"
-            placeholder=""
+            formControlName="propertyAddress"
           ></textarea>
+          <span
+            class="text-danger"
+            *ngIf="
+              propertyAddress?.invalid &&
+              (propertyAddress?.touched || propertyAddress?.dirty)
+            "
+            >Property address is required.</span
+          >
         </div>
         <div class="col-md-6 mt-4">
           <label for="loanTypeId" class="form-label">Loan Type</label>
-          <select class="form-select">
-            <option selected>Select loan type</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <select class="form-select" formControlName="loanTypeId">
+            <option selected value="-1">Select loan type</option>
+            <option *ngFor="let lt of loanTypes" [value]="lt.id">
+              {{ lt.type }}
+            </option>
           </select>
+          <span
+            class="text-danger"
+            *ngIf="
+              loanTypeId?.invalid && (loanTypeId?.touched || loanTypeId?.dirty)
+            "
+            >Please select loan type first.</span
+          >
         </div>
       </div>
       <div
         class="button-group d-flex justify-content-center align-items-center mt-5"
       >
         <button class="w-50 mt-3 me-2 btn btn-primary" type="submit">
-          Sign in
+          Save
         </button>
-        <button class="w-50 mt-3 me-2 btn btn-primary" type="submit">
+        <button
+          class="w-50 mt-3 me-2 btn btn-primary"
+          type="submit"
+          [disabled]="editMode === true"
+          (click)="OnReset()"
+        >
           Reset
         </button>
       </div>

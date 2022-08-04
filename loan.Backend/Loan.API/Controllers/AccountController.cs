@@ -1,4 +1,5 @@
 ﻿using Loan.API.Dtos.Account;
+using Loan.API.Error;
 using Loan.API.Extensions;
 using Loan.Core.Entities;
 using Loan.Core.Interfaces;
@@ -50,14 +51,14 @@ namespace Loan.API.Controllers
 
             if (userFromDb == null)
             {
-                return Unauthorized();
+                return Unauthorized(new ApiResponse(401));
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(userFromDb, loginDto.Password, false);
 
             if (!result.Succeeded)
             {
-                return Unauthorized();
+                return Unauthorized(new ApiResponse(401));
             }
 
             return new UserDto

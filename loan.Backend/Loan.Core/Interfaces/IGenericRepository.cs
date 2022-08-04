@@ -15,6 +15,7 @@ namespace Loan.Core.Interfaces
         Task<T> GetByFilterAsync(ISpecification<T> spec);
         Task<IReadOnlyList<T>> GetListByFilterAsync(ISpecification<T> spec);
         Task<int> CountAsync(ISpecification<T> spec);
-        Task PostAsync(T data);
+        Task PostAsync(T entity);
+        Task PutAsync(T entity);
     }
 }

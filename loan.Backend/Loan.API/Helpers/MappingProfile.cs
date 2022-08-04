@@ -10,9 +10,11 @@ namespace Loan.API.Helpers
         {
             CreateMap<LoanApplication, LoanApplicationResponse>()
             .ForMember(dest => dest.LoanType, src => src.MapFrom(x => x.LoanType.Type))
+            .ForMember(dest => dest.LoanTypeId, src => src.MapFrom(x => x.LoanType.Id))
             .ForMember(dest => dest.LoanStatus, src => src.MapFrom(x => x.LoanStatus.Status));
 
             CreateMap<CreateLoanRequest, LoanApplication>();
+            CreateMap<UpdateLoanRequest, LoanApplication>();
             CreateMap<LoanType, LoanTypesResponse>();
         }
     }

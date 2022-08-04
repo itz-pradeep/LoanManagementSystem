@@ -30,7 +30,7 @@ namespace Loan.Infrastructure.Data
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _loanContext.Set<T>().FindAsync(id);
+            return await _loanContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IReadOnlyList<T>> GetListByFilterAsync(ISpecification<T> spec)
@@ -45,7 +45,7 @@ namespace Loan.Infrastructure.Data
 
         public async Task PostAsync(T entity)
         {
-            if(entity == null)
+            if (entity == null)
             {
                 throw new ArgumentNullException();
             }
@@ -55,9 +55,21 @@ namespace Loan.Infrastructure.Data
 
         }
 
+        public async Task PutAsync(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var en = _loanContext.Set<T>().Update(entity);
+            en.State = EntityState.Modified;
+            await _loanContext.SaveChangesAsync();
+        }
+
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
-            return SpecEvaluator<T>.GetQuery(_loanContext.Set<T>(),spec);
+            return SpecEvaluator<T>.GetQuery(_loanContext.Set<T>(), spec);
         }
     }
 }

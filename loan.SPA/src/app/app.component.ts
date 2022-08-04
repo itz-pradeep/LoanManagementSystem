@@ -18,9 +18,6 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     var token = localStorage.getItem("token");
-    if(token == null){
-      this.router.navigateByUrl('/account');
-    }
     this.accountService.loadCurrentUser(token).subscribe(
       {
         next: (resp) => {

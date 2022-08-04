@@ -15,6 +15,9 @@ export class AccountService {
   constructor(private http: HttpClient) { 
   }
 
+  IsLoggedIn(){
+    return !!localStorage.getItem('token');
+  }
   loadCurrentUser(token:string){
     if(token == null){
       this.currentUserSource.next(null);
