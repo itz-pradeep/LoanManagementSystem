@@ -74,6 +74,7 @@ namespace Loan.API.Controllers
             var loanToSave = _mapper.Map<LoanApplication>(request);
             loanToSave.Id = id;
             loanToSave.ModifiedDate = DateTime.Now;
+            loanToSave.IsActive = loanApplication.IsActive;
             loanToSave.LoanStatusId = loanApplication.LoanStatusId; //TODO statu by enum Pre approval
 
             await _loanRepo.PutAsync(loanToSave);

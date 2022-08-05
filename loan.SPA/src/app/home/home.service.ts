@@ -18,32 +18,23 @@ export class HomeService extends BaseService {
   }
 
   getLoanTypes(){
-    var headers = this.getRequestHeaders();
-    return this.http.get<ILoanType[]>(this.baseUrl + "Loan/loanTypes",
-    {headers});
+    return this.http.get<ILoanType[]>(this.baseUrl + "Loan/loanTypes");
   }
 
   createLoanApplication(value: any){
-    var headers = this.getRequestHeaders();
-    return this.http.post(this.baseUrl + "Loan",value,{headers});
+    return this.http.post(this.baseUrl + "Loan",value);
   }
 
   updateLoanApplication(loanNumber: number,value: any){
-    var headers = this.getRequestHeaders();
-    return this.http.put(this.baseUrl + 'Loan/' + loanNumber,value,{headers});
+    return this.http.put(this.baseUrl + 'Loan/' + loanNumber,value);
   }
 
   getLoanApplications(){
-    var headers = this.getRequestHeaders();
-    return this.http.get<ILoanApplication[]>(this.baseUrl + "Loan",
-    {headers});
+    return this.http.get<ILoanApplication[]>(this.baseUrl + "Loan");
   }
 
   getLoanApplicationById(loanNumber: number){
-    var headers = this.getRequestHeaders();
-    
-    return this.http.get<ILoanApplication>(this.baseUrl + 'Loan/' + loanNumber ,
-    {headers});
+    return this.http.get<ILoanApplication>(this.baseUrl + 'Loan/' + loanNumber);
   }
 
   getLoanApplicationsByFilter(firstName?:string,lastName?:string,loanNumber?:number){
@@ -60,17 +51,11 @@ export class HomeService extends BaseService {
       params = params.append('loanId',loanNumber);
     }
     
-    var headers = this.getRequestHeaders();
     return this.http.get<ILoanApplication[]>(this.baseUrl + "Loan",
-    {headers,params}).pipe(
-      map((lp:ILoanApplication[]) => {
-        this.loanApplicationsFetched.next(lp);
-      })
-    );
+    {params});
   }
 
   cancelLoanApplication(laonNumber: number){
-    var headers = this.getRequestHeaders();
-    return this.http.delete(this.baseUrl+"Loan/"+laonNumber,{headers});
+    return this.http.delete(this.baseUrl+"Loan/"+laonNumber);
   }
 }

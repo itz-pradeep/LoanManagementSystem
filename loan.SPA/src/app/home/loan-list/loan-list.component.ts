@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
+import { AccountService } from 'src/app/account/account.service';
 import { ILoanApplication } from 'src/app/shared/models/loanApplication';
+import { IUser } from 'src/app/shared/models/user';
 import { HomeService } from '../home.service';
 
 @Component({
@@ -9,12 +12,13 @@ import { HomeService } from '../home.service';
 })
 export class LoanListComponent implements OnInit {
   loanApplications: ILoanApplication[] = [];
-  constructor(private homeService: HomeService) { }
+  currentUser$: Observable<IUser>;
+  constructor(private homeService: HomeService,private accountService:AccountService) { }
 
 
   ngOnInit(): void {
     this.setApplicationGrid();
-   
+    this.currentUser$ = this.accountService.currentUser$;
   }
 
   setApplicationGrid(){
@@ -29,12 +33,19 @@ export class LoanListComponent implements OnInit {
   }
 
   cancel(loanId: number){
-    alert(loanId);
-    this.homeService.cancelLoanApplication(loanId).subscribe({
-      next: () => {
-        this.setApplicationGrid();
-      }
-    });
+    const result = confirm("Are you sure you want to cancel this loan application?");
+    if(result && result === true){
+      this.homeService.cancelLoanApplication(loanId).subscribe({
+        next: () => {
+          let index = this.loanApplications.findIndex((obj) => {
+            return obj.id == loanId;
+          });
+          this.loanApplications.splice(index,1);
+          this.homeService.loanApplicationsFetched.next(this.loanApplications);
+        }
+      });
+    }
+  
   }
 
 

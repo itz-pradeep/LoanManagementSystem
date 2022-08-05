@@ -23,8 +23,9 @@ namespace Loan.API.Extensions
 
                     using var identityContext = scope.ServiceProvider.GetRequiredService<AppIdentityDbContext>();
                     using var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                    using var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                     identityContext.Database.Migrate();
-                    IdentityContextSeeder.SeedUsersData(userManager); //seed user data
+                    IdentityContextSeeder.SeedUsersData(userManager, roleManager); //seed user data
 
 
                 }

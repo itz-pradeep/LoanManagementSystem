@@ -11,6 +11,7 @@ import { IUser } from './shared/models/user';
 })
 export class AppComponent implements OnInit{
   title = 'LMS';
+  user: IUser;
   currentUser$ : Observable<IUser>;
   constructor(private accountService: AccountService,private router: Router){
 
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit{
         next: (resp) => {
           console.log("user loaded");
           this.currentUser$ = this.accountService.currentUser$;
+          
         },
         error: (e) => {
           console.log(e);
@@ -30,4 +32,7 @@ export class AppComponent implements OnInit{
       }
     );
   }
+
+
+
 }

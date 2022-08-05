@@ -32,14 +32,16 @@ namespace Loan.API.Controllers
         [Authorize]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            var user = await _userManager.FindByEmailFromClaimsPrincipal(User);
+            var userFromDb = await _userManager.FindByEmailFromClaimsPrincipal(User);
 
+            IList<string> userRoles = await _userManager.GetRolesAsync(userFromDb).ConfigureAwait(false);
             return new UserDto
             {
-                DisplayName = user.DisplayName,
-                Token = _tokenService.CreateToken(user),
-                Username = user.UserName
-
+                Id = userFromDb.Id,
+                Username = userFromDb.UserName,
+                DisplayName = userFromDb.DisplayName,
+                Token = _tokenService.CreateToken(userFromDb),
+                Roles = userRoles
             };
         }
 
@@ -61,11 +63,14 @@ namespace Loan.API.Controllers
                 return Unauthorized(new ApiResponse(401));
             }
 
+            IList<string> userRoles = await _userManager.GetRolesAsync(userFromDb).ConfigureAwait(false);
             return new UserDto
             {
+                Id = userFromDb.Id,
                 Username = userFromDb.UserName,
                 DisplayName = userFromDb.DisplayName,
-                Token = _tokenService.CreateToken(userFromDb)
+                Token = _tokenService.CreateToken(userFromDb),
+                Roles = userRoles
             };
 
         }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, of, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, map, of, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUser } from '../shared/models/user';
 
@@ -9,7 +9,7 @@ import { IUser } from '../shared/models/user';
 })
 export class AccountService {
   baseUrl = environment.baseUrl;
-  private currentUserSource = new ReplaySubject<IUser>(null);
+  private currentUserSource = new BehaviorSubject<IUser>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { 
@@ -18,6 +18,7 @@ export class AccountService {
   IsLoggedIn(){
     return !!localStorage.getItem('token');
   }
+
   loadCurrentUser(token:string){
     if(token == null){
       this.currentUserSource.next(null);
@@ -29,6 +30,7 @@ export class AccountService {
     return this.http.get(this.baseUrl + 'account',{headers}).pipe(
       map((user:IUser) => {
         localStorage.setItem('token',user.token);
+        localStorage.setItem('user', JSON.stringify(user));
         this.currentUserSource.next(user);
       })
     );
@@ -39,6 +41,7 @@ export class AccountService {
       map((user: IUser) => {
         if(user){
           localStorage.setItem('token', user.token);
+          localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         } 
       })
@@ -46,6 +49,7 @@ export class AccountService {
   }
 
   logout(){
+    localStorage.removeItem('user');
     localStorage.removeItem('token');
     this.currentUserSource.next(null);
   }

@@ -13,12 +13,14 @@ namespace Loan.API.Extensions
         {
             var config = builder.Configuration;
             var core = builder.Services.AddIdentityCore<AppUser>();
-            core = new IdentityBuilder(core.UserType,core.Services);
+            core = new IdentityBuilder(core.UserType, typeof(IdentityRole), core.Services);
             core.AddEntityFrameworkStores<AppIdentityDbContext>();
             core.AddSignInManager<SignInManager<AppUser>>();
+            core.AddRoleManager<RoleManager<IdentityRole>>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,

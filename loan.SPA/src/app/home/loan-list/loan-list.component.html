@@ -1,7 +1,7 @@
 <table class="table table-striped">
   <thead class="table-light">
     <tr>
-      <th scope="col">Application Id</th>
+      <th scope="col">Loan number</th>
       <th scope="col">First name</th>
       <th scope="col">Last name</th>
       <th scope="col">Amount</th>
@@ -18,12 +18,17 @@
       <td>{{ item.loanTenure }}</td>
       <td>
         <button
+          *ngIf="(currentUser$ | async).roles.includes('Admin')"
           class="btn btn-outline-success me-2"
           [routerLink]="['loan-create', item.id]"
         >
           <i class="bi bi-pencil-square"></i>
         </button>
-        <button (click)="cancel(item.id)" class="btn btn-outline-danger">
+        <button
+          *ngIf="(currentUser$ | async).roles.includes('Admin')"
+          (click)="cancel(item.id)"
+          class="btn btn-outline-danger"
+        >
           <i class="bi bi-trash"></i>
         </button>
       </td>
