@@ -41,6 +41,8 @@ namespace Loan.Infrastructure.Data
                 }
 
             }
+
+            context.SaveChanges();
         }
     }
 }

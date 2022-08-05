@@ -9,7 +9,7 @@ import { IUser } from '../shared/models/user';
 })
 export class AccountService {
   baseUrl = environment.baseUrl;
-  private currentUserSource = new BehaviorSubject<IUser>(null);
+  private currentUserSource = new BehaviorSubject<IUser>(JSON.parse(localStorage.getItem('currentUser$')));
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { 
@@ -30,7 +30,7 @@ export class AccountService {
     return this.http.get(this.baseUrl + 'account',{headers}).pipe(
       map((user:IUser) => {
         localStorage.setItem('token',user.token);
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('currentUser$', JSON.stringify(user));
         this.currentUserSource.next(user);
       })
     );
@@ -41,7 +41,7 @@ export class AccountService {
       map((user: IUser) => {
         if(user){
           localStorage.setItem('token', user.token);
-          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('currentUser$', JSON.stringify(user));
           this.currentUserSource.next(user);
         } 
       })
@@ -49,7 +49,7 @@ export class AccountService {
   }
 
   logout(){
-    localStorage.removeItem('user');
+    localStorage.removeItem('currentUser$');
     localStorage.removeItem('token');
     this.currentUserSource.next(null);
   }

@@ -87,7 +87,6 @@ export class LoanCreateComponent implements OnInit {
     this.homeService.getLoanTypes().subscribe({
       next: (d) => {
         this.loanTypes = d
-        console.log(this.loanTypes[0].type);
       },
       error: (e) => {
         console.log(e);
