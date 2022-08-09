@@ -24,6 +24,7 @@ namespace Loan.API.Extensions
         public static void InjectServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IRepositoryWrapper,RepositoryWrapper>();
             builder.Services.AddScoped<ITokenService, TokenService>();
         }
 

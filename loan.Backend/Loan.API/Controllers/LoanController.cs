@@ -16,30 +16,34 @@ namespace Loan.API.Controllers
         private readonly IGenericRepository<LoanApplication> _loanRepo;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<LoanType> _loanTypeRepo;
+        private readonly IRepositoryWrapper _repo;
 
         public LoanController(IGenericRepository<LoanApplication> loanRepo,
-        IGenericRepository<LoanType> loanTypeRepo, IMapper mapper)
+        IGenericRepository<LoanType> loanTypeRepo,IRepositoryWrapper repo, IMapper mapper)
         {
             _loanTypeRepo = loanTypeRepo;
+            _repo = repo;
             _loanRepo = loanRepo;
             _mapper = mapper;
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IReadOnlyList<LoanApplicationResponse>>> GetLoanApplications([FromQuery] LoanApplicationFilter filter)
+        public async Task<IActionResult> GetLoanApplications([FromQuery] LoanApplicationFilter filter)
         {
-            var spec = new LoanWithTypeAndStatus(filter);
-            var loanApplications = await _loanRepo.GetListByFilterAsync(spec);
+            var loanApplications = await _repo.LoanRepo.GetAllWithCriteria(filter);
             return Ok(_mapper.Map<IReadOnlyList<LoanApplicationResponse>>(loanApplications));
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<IReadOnlyList<LoanApplicationResponse>>> GetLoanApplicationByID(int id)
+        public async Task<IActionResult> GetLoanApplicationByID(int id)
         {
-            var spec = new LoanWithTypeAndStatus(id);
-            var loanApplication = await _loanRepo.GetByFilterAsync(spec);
+            var loanApplication = await  _repo.LoanRepo.GetByIdWithCriteria(id);
+            if (loanApplication == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
             return Ok(_mapper.Map<LoanApplicationResponse>(loanApplication));
         }
 
@@ -47,14 +51,15 @@ namespace Loan.API.Controllers
         [Authorize]
         public async Task<ActionResult<LoanApplicationResponse>> PostLoanApplication([FromBody] CreateLoanRequest request)
         {
-
             var loanToSave = _mapper.Map<LoanApplication>(request);
             loanToSave.CreatedDate = DateTime.Now;
             loanToSave.ModifiedDate = DateTime.Now;
             loanToSave.LoanStatusId = 1; //TODO statu by enum Pre approval
 
 
-            await _loanRepo.PostAsync(loanToSave);
+            await _repo.LoanRepo.CreateAsync(loanToSave);
+
+            _repo.Save();
 
             return Ok();
         }
@@ -77,7 +82,9 @@ namespace Loan.API.Controllers
             loanToSave.IsActive = loanApplication.IsActive;
             loanToSave.LoanStatusId = loanApplication.LoanStatusId; //TODO statu by enum Pre approval
 
-            await _loanRepo.PutAsync(loanToSave);
+            _repo.LoanRepo.Update(loanToSave);
+
+            _repo.Save();
 
             return Ok();
         }

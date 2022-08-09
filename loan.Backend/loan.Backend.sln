@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loan.Core", "Loan.Core\Loan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loan.Infrastructure", "Loan.Infrastructure\Loan.Infrastructure.csproj", "{43D2B8F4-CA92-4E4F-9383-DFA21C4C4B94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loan.UnitTests", "Loan.UnitTests\Loan.UnitTests.csproj", "{E2A6B899-D1A5-4A18-A070-6A84D94BA3BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{43D2B8F4-CA92-4E4F-9383-DFA21C4C4B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43D2B8F4-CA92-4E4F-9383-DFA21C4C4B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43D2B8F4-CA92-4E4F-9383-DFA21C4C4B94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2A6B899-D1A5-4A18-A070-6A84D94BA3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2A6B899-D1A5-4A18-A070-6A84D94BA3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2A6B899-D1A5-4A18-A070-6A84D94BA3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2A6B899-D1A5-4A18-A070-6A84D94BA3BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
